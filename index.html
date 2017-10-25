@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html><head>
+  
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no"> 
+  <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+  <title>One2go - Trip Name</title>
+  
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+
+<!-- use jquery for datepicker-->
+  
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  
+<!-- google map api -->
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;sensor=false"></script>
+
+  <script src="one2go.js"></script>  
+  <style>
+     body {
+     font-family: Verdana,Arial,sans-serif;
+	 font-size : 0.75em;
+     }
+     #header {
+       text-align: right;
+       font-size: 0.75em;
+     }
+     #nav li {
+       display: inline;
+     }
+     li.inline_nav {
+       padding: 10px;
+     }
+     #main {
+	 height: 80%;
+     }
+     #footer {
+	clear : both;
+        font-size: 0.75em;
+        text-align: center;
+     }
+    #map-canvas {
+	height : 400px;
+	width : 40%;
+	float: right;
+    }
+
+    #DestinationPanel{
+	width : 60%;
+	float: left;
+    }
+
+    #DestinationTbl {
+        text-align: left; 
+        
+    }
+	.tinyfonts {
+	font-size : 0.4em;
+	}
+	table.day {
+	border: 1px solid gray;
+	text-align: left; 
+	// vertical-align: top;
+	}
+
+
+  </style>
+  
+  <script>
+  $(function() {
+    $( ".datepicker" ).datepicker();
+  });
+</script>
+
+</head>
+
+<body>
+    <div id="header">
+	<ul id="nav">
+	    <li class="inline_nav">&#8227;<a href="">Home</a></li>
+	    <li class="inline_nav">&#8227;<a href="">Contact Us</a> </li>
+	    <li class="inline_nav">&#8227;<a href="">Login</a> </li>
+        </ul>
+    </div>
+    <div id="main">
+        <div id="DestinationPanel">
+		<table id="TripNameTbl" border="0" cellpadding="2" cellspacing="5"> <tr>
+	    <td>Trip Name</td> <td><h3><input type="text" id="TripNameField" placeholder="Trip Name" onChange="setTripName(); return false;"></h3></td><td>&nbsp;</td>
+		</tr>  <tr>
+        <td>Start Date</td> <td><input name="StartDate" type="date"></td>
+		</tr></table>
+		<hr>	
+			<!--p> Start Date <input class="datepicker" size="10" name="StartDate" type="date"> </p-->
+		<table id="TblAllDays"  style="border:none;">
+			<tr><td>
+            <table id="TblDay1"  class="day">
+			<tr style="text-align: left; vertical-align: top;">
+				<td>Day 1</td>
+			</tr>
+			<tr style="text-align: left; vertical-align: top;">
+				<td>Drive</td>
+				<td>From </td>
+				<td><input id="start_loc_1_0" type="text" name="start_loc_1_0" onChange="setStartLoc(0,'start_loc_1_0'); return false;"> To <input id="end_loc_1_0" type="text" name="end_loc_1_0" onChange="setEndLoc(0,'end_loc_1_0', this); return false;"> </td>
+				
+				<td><input type="image" src="icons/delete.png" width="15" width="15" alt="Delete" onclick="delRow(this,'TblDay1');return false;"> <input type="image" src="icons/up.png" width="15" width="15" alt="Up" onclick="upRow(this, 'TblDay1');return false;"> <input type="image" src="icons/down.png" width="15" width="15" alt="down" onclick="downRow(this, 'TblDay1');return false;"></td>
+				<!--td><input value="DEL" type="submit" onclick="addDestTblRow('TblDay1'); return false;"> <input value="Meal" type="submit" onclick="addDestTblRow('TblDay1'); return false;"> <input value="Stay" type="submit" onclick="addDestTblRow('TblDay1'); return false;">
+				</td-->			
+				<!--input id="gmap_where" type="text" name="gmap_where" onChange="findAddress(); return false;"/-->
+			</tr>
+			<tr style="text-align: left;">
+				<!--td>&nbsp;</td-->
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>Add <input type="image" src="icons/car.png" width="30" width="30" alt="Drive" onclick="addDestTblRow('TblDay1'); return false;"> &nbsp; <input  type="image" src="icons/meal.png" width="30" width="30" alt="Meal" onclick="addMealRow('TblDay1'); return false;"> &nbsp; <input type="image" src="icons/bed.png" width="30" width="30" alt="Stay" onclick="addStayRow('TblDay1'); return false;"></td>
+				<td>&nbsp;</td>
+			</tr>
+			<!-- Add the remarks feature later ...
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td><small>Remarks</small><br>
+					<textarea name="Meal_Rmk_1_0" rows="3" cols="50"></textarea></td>
+				<td>&nbsp;</td>
+			</tr>  --->
+			</table>
+            <p><input type="image" src="icons/deleteDay.png" width="80" width="200" alt="DeleteDay" onclick="return false;"><input type="image" src="icons/upDay.png" width="80" width="200" alt="UpDay" onclick="upDayRow(this, 'TblAllDays');return false;">
+			</td></tr>
+            <tr><td>
+            <input type="image" src="icons/addDay.png" width="80" width="200" alt="AddDay" onclick="addDay('TblAllDays');return false;"> 
+            </td></tr>
+		</table>
+		<p>
+        
+	</div> <!--DestinationPanel-->
+        <div id="map-canvas"> </div>    
+    </div> <!--main-->
+
+    <div id="footer"><br>
+	Copyright 2013
+    </div>
+
+</body>
+</html>
