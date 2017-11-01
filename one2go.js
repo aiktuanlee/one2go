@@ -277,8 +277,8 @@ function createMarker(obj) {
 //////////////////////////////////////////
 /// Routines to handle Destination table
 //////////////////////////////////////////
-function addDestTblRow(tableId) {
-    var destTbl = document.getElementById(tableId);
+function addDestTblRow(r) {
+    var destTbl = r.parentNode.parentNode.parentNode.parentNode;
     var rowIndex = destTbl.rows.length-1;
     
 	// clear the add ... cell in the current last row before
@@ -296,12 +296,12 @@ function addDestTblRow(tableId) {
 	fromCell.innerHTML = 'From';
     startToEndCell.innerHTML = '<input id="start_loc_1_'+rowIndex+'" type="text" name="start_loc_1_'+rowIndex+'" onChange="setStartLoc('+rowIndex+',\'start_loc_1_'+rowIndex+'\'); return false;"> To <input id="end_loc_1_'+rowIndex+'" type="text" name="end_loc_1_'+rowIndex+'" onChange="setEndLoc('+rowIndex+',\'end_loc_1_'+rowIndex+'\',this);  return true;">';
 
-	btnCell.innerHTML = '<input type="image" src="icons/delete.png" width="15" width="15" alt="Delete" onclick="delRow(this, \''+tableId+'\');return false;"> <input type="image" src="icons/up.png" width="15" width="15" alt="Up" onclick="upRow(this, \''+tableId+'\');return false;"> <input type="image" src="icons/down.png" width="15" width="15" alt="down" onclick="downRow(this, \''+tableId+'\');return false;">';
+	btnCell.innerHTML = '<input type="image" src="icons/delete.png" width="15" width="15" alt="Delete" onclick="delRow(this);return false;"> <input type="image" src="icons/up.png" width="15" width="15" alt="Up" onclick="upRow(this);return false;"> <input type="image" src="icons/down.png" width="15" width="15" alt="down" onclick="downRow(this);return false;">';
     
 }
 
-function addMealRow(tableId) {
-    var destTbl = document.getElementById(tableId);
+function addMealRow(r) {
+    var destTbl = r.parentNode.parentNode.parentNode.parentNode;
     var rowIndex = destTbl.rows.length-1;
     
     var row = destTbl.insertRow(rowIndex);
@@ -314,11 +314,12 @@ function addMealRow(tableId) {
     eatCell.innerHTML = 'Eat';
 	atCell.innerHTML = 'At';
     mealCell.innerHTML = '<input type="text" size="48" name="Meal_1_'+rowIndex+'", value="" onChange="setValue(this);return false;">';
-	btnCell.innerHTML = '<input type="image" src="icons/delete.png" width="15" width="15" alt="Delete" onclick="delRow(this, \''+tableId+'\');return false;"> <input type="image" src="icons/up.png" width="15" width="15" alt="Up" onclick="upRow(this, \''+tableId+'\');return false;"> <input type="image" src="icons/down.png" width="15" width="15" alt="down" onclick="downRow(this, \''+tableId+'\');return false;">';
+	btnCell.innerHTML = '<input type="image" src="icons/delete.png" width="15" width="15" alt="Delete" onclick="delRow(this);return false;"> <input type="image" src="icons/up.png" width="15" width="15" alt="Up" onclick="upRow(this);return false;"> <input type="image" src="icons/down.png" width="15" width="15" alt="down" onclick="downRow(this);return false;">';
 }
 
-function addStayRow(tableId) {
-    var destTbl = document.getElementById(tableId);
+function addStayRow(r) {
+    //var destTbl = document.getElementById(tableId);
+    var destTbl = r.parentNode.parentNode.parentNode.parentNode;
     var rowIndex = destTbl.rows.length-1;
     
     var row = destTbl.insertRow(rowIndex);
@@ -331,7 +332,7 @@ function addStayRow(tableId) {
     eatCell.innerHTML = 'Stay';
 	atCell.innerHTML = 'At';
     mealCell.innerHTML = '<input type="text" size="48" name="Stay_1_'+rowIndex+'" value="" onChange="setValue(this);return false;">';
-	btnCell.innerHTML = '<input type="image" src="icons/delete.png" width="15" width="15" alt="Delete" onclick="delRow(this, \''+tableId+'\');return false;"> <input type="image" src="icons/up.png" width="15" width="15" alt="Up" onclick="upRow(this, \''+tableId+'\');return false;"> <input type="image" src="icons/down.png" width="15" width="15" alt="down" onclick="downRow(this, \''+tableId+'\');return false;">';
+	btnCell.innerHTML = '<input type="image" src="icons/delete.png" width="15" width="15" alt="Delete" onclick="delRow(this);return false;"> <input type="image" src="icons/up.png" width="15" width="15" alt="Up" onclick="upRow(this);return false;"> <input type="image" src="icons/down.png" width="15" width="15" alt="down" onclick="downRow(this);return false;">';
 }
 
 function setValue(r) {
@@ -342,14 +343,16 @@ function setValue(r) {
 }
 
 
-function delRow(r, tableId) {
-    var destTbl = document.getElementById(tableId);
+function delRow(r) {
+    //var destTbl = document.getElementById(tableId);
+    var destTbl = r.parentNode.parentNode.parentNode.parentNode;
 	var i = r.parentNode.parentNode.rowIndex;	
 	destTbl.deleteRow(i);
 }
 
-function upRow(r, tableId) {
-    var destTbl = document.getElementById(tableId);
+function upRow(r) {
+    //var destTbl = document.getElementById(tableId);
+    var destTbl = r.parentNode.parentNode.parentNode.parentNode;
 	var i = r.parentNode.parentNode.rowIndex;
 	if(i>1) {
 		// insert one row below and transfer contents from row above.
@@ -364,6 +367,59 @@ function upRow(r, tableId) {
 		
 		//delete row above
 		destTbl.deleteRow((i-1));
+	}
+}
+
+
+function downRow(r) {
+//    var destTbl = document.getElementById(tableId);
+    var destTbl = r.parentNode.parentNode.parentNode.parentNode;
+	var i = r.parentNode.parentNode.rowIndex;
+	//alert(r.parentNode.parentNode.parentNode.parentNode.id);
+	if(i<(destTbl.rows.length-2)) {
+		// insert one row below and transfer contents from row above.
+		var row = destTbl.insertRow(i+2);
+		var currentRow = destTbl.rows[i];
+				
+		for(k=0; k < currentRow.cells.length; k++) {
+			var newCell = row.insertCell(k);
+			newCell.innerHTML = currentRow.cells[k].innerHTML;
+		}
+		
+		//delete row above
+		destTbl.deleteRow(i);
+	}
+}
+
+function downDayRow(r, tableId) {
+//    var destTbl = document.getElementById(tableId);
+    var destTbl = r.parentNode.parentNode.parentNode.parentNode.parentNode;
+	var i = r.parentNode.parentNode.parentNode.rowIndex;
+	//alert(r.parentNode.parentNode.parentNode.parentNode.id);
+	if(i<(destTbl.rows.length-2)) {
+		// insert one row below and transfer contents from row above.
+		var row = destTbl.insertRow(i+2);
+		var currentRow = destTbl.rows[i];
+				
+		for(k=0; k < currentRow.cells.length; k++) {
+			var newCell = row.insertCell(k);
+			newCell.innerHTML = currentRow.cells[k].innerHTML;
+		}
+		
+		//delete row above
+		destTbl.deleteRow(i);
+        
+        //swap row/day IDs
+        var dnTbl = document.getElementById("TblDay"+ (i+1));
+        var upTbl = document.getElementById("TblDay"+(i+2));
+        
+        dnTbl.rows[0].cells[0].innerHTML = "Day " + (i+2);
+        dnTbl.id = "TblDay" + (i+2);
+        
+        upTbl.rows[0].cells[0].innerHTML = "Day " + (i+1);
+        upTbl.id = "TblDay" + (i+1);
+        
+        
 	}
 }
 
@@ -387,27 +443,6 @@ function upDayRow(r, tableId) {
 		destTbl.deleteRow((i-1));
 	}
 }
-
-function downRow(r, tableId) {
-//    var destTbl = document.getElementById(tableId);
-    var destTbl = r.parentNode.parentNode.parentNode.parentNode;
-	var i = r.parentNode.parentNode.rowIndex;
-	//alert(r.parentNode.parentNode.parentNode.parentNode.id);
-	if(i<(destTbl.rows.length-2)) {
-		// insert one row below and transfer contents from row above.
-		var row = destTbl.insertRow(i+2);
-		var currentRow = destTbl.rows[i];
-				
-		for(k=0; k < currentRow.cells.length; k++) {
-			var newCell = row.insertCell(k);
-			newCell.innerHTML = currentRow.cells[k].innerHTML;
-		}
-		
-		//delete row above
-		destTbl.deleteRow(i);
-	}
-}
-
 
 function setTripName() {
 	var tripName = document.getElementById("TripNameField").value;
@@ -442,14 +477,14 @@ function addDay(tableId) {
     var newDayTblId = "TblDay"+ dayCount;
     cell.innerHTML='<table id="'+ newDayTblId +'"  class="day"></table>'+
                    '<p><input type="image" src="icons/deleteDay.png" width="80" width="200" alt="DeleteDay" onclick="return false;">'+
-                   '<input type="image" src="icons/upDay.png" width="80" width="200" alt="UpDay" onclick="upDayRow(this, \'TblAllDays\');return false;">';
+                   '<input type="image" src="icons/swapDay.png" width="80" width="200" alt="SwapDay" onclick="downDayRow(this, \'TblAllDays\');return false;">';
     
     var newDayTbl = document.getElementById(newDayTblId);
     cell = newDayTbl.insertRow(0).insertCell(0);
     cell.innerHTML = "Day "+ dayCount;
     row = newDayTbl.insertRow(1);
     row.insertCell(0).innerHTML="&nbsp;"; row.insertCell(1).innerHTML="&nbsp;";
-    row.insertCell(2).innerHTML = 'Add <input type="image" src="icons/car.png" width="30" width="30" alt="Drive" onclick="addDestTblRow(\''+newDayTblId+'\'); return false;"> &nbsp; <input  type="image" src="icons/meal.png" width="30" width="30" alt="Meal" onclick="addMealRow(\''+newDayTblId+'\'); return false;"> &nbsp; <input type="image" src="icons/bed.png" width="30" width="30" alt="Stay" onclick="addStayRow(\''+newDayTblId+'\'); return false;">';
+    row.insertCell(2).innerHTML = 'Add <input type="image" src="icons/car.png" width="30" width="30" alt="Drive" onclick="addDestTblRow(this); return false;"> &nbsp; <input  type="image" src="icons/meal.png" width="30" width="30" alt="Meal" onclick="addMealRow(this); return false;"> &nbsp; <input type="image" src="icons/bed.png" width="30" width="30" alt="Stay" onclick="addStayRow(this); return false;">';
 	row.insertCell(3).innerHTML = "&nbsp;";
 }
 

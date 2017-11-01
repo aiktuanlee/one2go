@@ -103,16 +103,14 @@
 				<td>From </td>
 				<td><input id="start_loc_1_0" type="text" name="start_loc_1_0" onChange="setStartLoc(0,'start_loc_1_0'); return false;"> To <input id="end_loc_1_0" type="text" name="end_loc_1_0" onChange="setEndLoc(0,'end_loc_1_0', this); return false;"> </td>
 				
-				<td><input type="image" src="icons/delete.png" width="15" width="15" alt="Delete" onclick="delRow(this,'TblDay1');return false;"> <input type="image" src="icons/up.png" width="15" width="15" alt="Up" onclick="upRow(this, 'TblDay1');return false;"> <input type="image" src="icons/down.png" width="15" width="15" alt="down" onclick="downRow(this, 'TblDay1');return false;"></td>
-				<!--td><input value="DEL" type="submit" onclick="addDestTblRow('TblDay1'); return false;"> <input value="Meal" type="submit" onclick="addDestTblRow('TblDay1'); return false;"> <input value="Stay" type="submit" onclick="addDestTblRow('TblDay1'); return false;">
-				</td-->			
-				<!--input id="gmap_where" type="text" name="gmap_where" onChange="findAddress(); return false;"/-->
+				<td><input type="image" src="icons/delete.png" width="15" width="15" alt="Delete" onclick="delRow(this);return false;"> <input type="image" src="icons/up.png" width="15" width="15" alt="Up" onclick="upRow(this);return false;"> <input type="image" src="icons/down.png" width="15" width="15" alt="down" onclick="downRow(this);return false;"></td>
+			
 			</tr>
 			<tr style="text-align: left;">
 				<!--td>&nbsp;</td-->
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
-				<td>Add <input type="image" src="icons/car.png" width="30" width="30" alt="Drive" onclick="addDestTblRow('TblDay1'); return false;"> &nbsp; <input  type="image" src="icons/meal.png" width="30" width="30" alt="Meal" onclick="addMealRow('TblDay1'); return false;"> &nbsp; <input type="image" src="icons/bed.png" width="30" width="30" alt="Stay" onclick="addStayRow('TblDay1'); return false;"></td>
+				<td>Add <input type="image" src="icons/car.png" width="30" width="30" alt="Drive" onclick="addDestTblRow(this); return false;"> &nbsp; <input  type="image" src="icons/meal.png" width="30" width="30" alt="Meal" onclick="addMealRow(this); return false;"> &nbsp; <input type="image" src="icons/bed.png" width="30" width="30" alt="Stay" onclick="addStayRow(this); return false;"></td>
 				<td>&nbsp;</td>
 			</tr>
 			<!-- Add the remarks feature later ...
@@ -125,7 +123,7 @@
 				<td>&nbsp;</td>
 			</tr>  --->
 			</table>
-            <p><input type="image" src="icons/deleteDay.png" width="80" width="200" alt="DeleteDay" onclick="return false;"><input type="image" src="icons/upDay.png" width="80" width="200" alt="UpDay" onclick="upDayRow(this, 'TblAllDays');return false;">
+            <p><input type="image" src="icons/deleteDay.png" width="80" width="200" alt="DeleteDay" onclick="return false;"><input type="image" src="icons/swapDay.png" width="80" width="200" alt="SwapDay" onclick="downDayRow(this, 'TblAllDays');return false;">
 			</td></tr>
             <tr><td>
             <input type="image" src="icons/addDay.png" width="80" width="200" alt="AddDay" onclick="addDay('TblAllDays');return false;"> 
