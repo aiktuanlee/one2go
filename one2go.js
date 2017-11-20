@@ -335,6 +335,37 @@ function addStayRow(r) {
 	btnCell.innerHTML = '<input type="image" src="icons/delete.png" width="15" width="15" alt="Delete" onclick="delRow(this);return false;"> <input type="image" src="icons/up.png" width="15" width="15" alt="Up" onclick="upRow(this);return false;"> <input type="image" src="icons/down.png" width="15" width="15" alt="down" onclick="downRow(this);return false;">';
 }
 
+function addDoRow(r) {
+    var destTbl = r.parentNode.parentNode.parentNode.parentNode;
+    var rowIndex = destTbl.rows.length-1;
+    
+    var row = destTbl.insertRow(rowIndex);
+    //var cell1 = row.insertCell(0); // Day X
+    var eatCell = row.insertCell(0); // Drive
+    var atCell = row.insertCell(1); // From
+    var doCell = row.insertCell(2); // Start to Dest
+	var btnCell = row.insertCell(3); // Add Drive/Meal/Stay
+    
+    eatCell.innerHTML = 'Do';
+	atCell.innerHTML = 'What';
+    doCell.innerHTML = '<input type="text" size="15" name="DoW_1_'+rowIndex+'" value="" onChange="setDoWhat(this);return false;"> At <input type="text" size="30" name="DoA_1_'+rowIndex+'" value="" onChange="setDoWhere(this);return false;">';
+	btnCell.innerHTML = '<input type="image" src="icons/delete.png" width="15" width="15" alt="Delete" onclick="delRow(this);return false;"> <input type="image" src="icons/up.png" width="15" width="15" alt="Up" onclick="upRow(this);return false;"> <input type="image" src="icons/down.png" width="15" width="15" alt="down" onclick="downRow(this);return false;">';
+}
+
+function setDoWhat(r) {
+    var doExp = new RegExp("<.*"+r.name+'.*> At');
+    var doRep = '<input type="text" size="15" name="'+r.name+'" value="'+r.value+'" onChange="setDoWhat(this);return false;"> At';
+    var strReplace = r.parentNode.innerHTML.replace(doExp, doRep);
+    r.parentNode.innerHTML = strReplace;
+}
+
+function setDoWhere(r) {
+    var doExp = new RegExp("At <.*"+r.name+'.*>');
+    var doRep = 'At <input type="text" size="30" name="'+r.name+'" value="'+r.value+'" onChange="setDoWhere(this);return false;">';
+    var strReplace = r.parentNode.innerHTML.replace(doExp, doRep);
+    r.parentNode.innerHTML = strReplace;
+}
+
 function setValue(r) {
 	var strVal = r.value;
 	var strCell = r.parentNode.innerHTML;
@@ -484,7 +515,7 @@ function addDay(tableId) {
     cell.innerHTML = "Day "+ dayCount;
     row = newDayTbl.insertRow(1);
     row.insertCell(0).innerHTML="&nbsp;"; row.insertCell(1).innerHTML="&nbsp;";
-    row.insertCell(2).innerHTML = 'Add <input type="image" src="icons/car.png" width="30" width="30" alt="Drive" onclick="addDestTblRow(this); return false;"> &nbsp; <input  type="image" src="icons/meal.png" width="30" width="30" alt="Meal" onclick="addMealRow(this); return false;"> &nbsp; <input type="image" src="icons/bed.png" width="30" width="30" alt="Stay" onclick="addStayRow(this); return false;">';
+    row.insertCell(2).innerHTML = 'Add <input type="image" src="icons/car.png" width="30" width="30" alt="Drive" onclick="addDestTblRow(this); return false;"> &nbsp; <input  type="image" src="icons/meal.png" width="30" width="30" alt="Meal" onclick="addMealRow(this); return false;"> &nbsp; <input type="image" src="icons/bed.png" width="30" width="30" alt="Stay" onclick="addStayRow(this); return false;"> &nbsp; <input type="image" src="icons/do.png" width="30" width="30" alt="See & Do" onclick="addDoRow(this); return false;">';
 	row.insertCell(3).innerHTML = "&nbsp;";
 }
 
